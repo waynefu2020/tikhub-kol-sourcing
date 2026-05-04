@@ -133,7 +133,7 @@ export default function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTerminalStep((prev) => (prev < terminalLines.length ? prev + 1 : 0));
-    }, 800);
+    }, 200);
     return () => clearInterval(interval);
   }, []);
 
