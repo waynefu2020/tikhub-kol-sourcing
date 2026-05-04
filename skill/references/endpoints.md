@@ -112,6 +112,85 @@ videos     → aweme.author.aweme_count
 
 ---
 
+### 5. 获取用户 Profile（Web 版）⭐ 推荐
+
+**路径**: `/api/v1/tiktok/web/fetch_user_profile`
+**方法**: GET
+**适用**: Phase 2 Profile 补全，获取完整 bio 和邮箱
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| uniqueId | string | **优先使用**，用户主页链接中的用户名（如 `renz.sadiwa`） |
+| sec_user_id | string | 备选，用户的 secUid |
+
+**响应路径**: `data.userInfo.user`
+**类型**: user
+
+**Creator 字段映射**:
+```
+unique_id   → data.userInfo.user.uniqueId
+nickname    → data.userInfo.user.nickname
+avatar      → data.userInfo.user.avatarMedium
+bio         → data.userInfo.user.signature
+follower    → data.userInfo.user.followerCount
+videos      → data.userInfo.user.videoCount
+verified    → data.userInfo.user.verified       // 是否认证
+bioLink     → data.userInfo.user.bioLink.link   // 落地页链接
+```
+
+**缓存优势**：
+- 请求成功后会返回 `cache_url`，24 小时内重复访问不扣费
+- 适合脚本中断后重跑场景
+
+---
+
+## 推荐工作流：两步法
+
+**Step 1 — 视频搜索发现创作者**（见通用搜索接口 #2）
+**Step 2 — User Profile 补全 bio 和邮箱**
+
+```
+/api/v1/tiktok/web/fetch_user_profile?uniqueId={unique_id}
+```
+
+| 字段 | 路径 |
+|------|------|
+| 完整 bio | `data.userInfo.user.signature` |
+| 粉丝数 | `data.userInfo.user.followerCount` |
+| 视频数 | `data.userInfo.user.videoCount` |
+| 昵称 | `data.userInfo.user.nickname` |
+| 头像 | `data.userInfo.user.avatarMedium` |
+| 落地页 | `data.userInfo.user.bioLink.link` |
+
+**效果对比（实测）**：
+- 仅视频搜索：有邮箱率 ~5%
+- 视频搜索 + Profile 补全：有邮箱率 46%+（Anker 充电宝实测 54 人中 25 人有邮箱）
+
+原因：视频搜索返回的 author 对象是精简版，`signature` 字段常为空；调用 `fetch_user_profile` 才能获取完整 bio，其中包含创作者留下的联系邮箱。
+
+限速：10 req/s，建议请求间隔 150ms。
+
+---
+
+## Profile API 对比
+
+用于 Phase 2 补全的两种用户信息接口对比：
+
+| 维度 | `/app/v3/handler_user_profile` | `/web/fetch_user_profile` ⭐ |
+|------|-------------------------------|----------------------------|
+| 参数 | `unique_id` | `uniqueId`（优先） |
+| Bio 路径 | `data.user.signature` | `data.userInfo.user.signature` |
+| 邮箱获取 | ✅ | ✅ |
+| 头像 URL | ❌ | ✅ `avatarMedium` |
+| 落地页链接 | ❌ | ✅ `bioLink.link` |
+| 认证状态 | ❌ | ✅ `verified` |
+| 缓存 | ❌ | ✅ **24h 缓存** |
+| 费用 | $0.0010/次 | $0.0010/次（缓存免费） |
+
+**推荐**：Phase 2 使用 `/web/fetch_user_profile`，字段更丰富且有缓存，中断重跑可省费用。
+
+---
+
 ## 接口选择建议
 
 **推荐优先级（从高到低）**：
@@ -119,6 +198,7 @@ videos     → aweme.author.aweme_count
 | 场景 | 推荐接口 | 原因 |
 |------|---------|------|
 | **默认（大多数情况）** | 通用搜索 #2 加 `search_type=1` | **视频搜索**：找真实内容创作者，过滤商家号 |
+| **Phase 2 Profile 补全** | `/web/fetch_user_profile` (#5) | 字段完整 + 24h 缓存 |
 | 搜特定话题 | 话题视频 (#3) | 需要先获取 hashtag_id |
 | 视频搜索无结果时备选 | 关键词搜用户 (#1) | 直接搜账号名，商家号多但字段更完整 |
 | #1 返回结果少 | App 版用户搜索 (#4) | 数据源不同，可能有更多结果 |

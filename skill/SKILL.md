@@ -196,9 +196,11 @@ opencli amazon product <商品链接>
 - **缓存优势**：`/web/fetch_user_profile` 有 24h 缓存，脚本中断重跑时不重复扣费
 - 请求间隔 150ms（接口限速 10 req/s）
 
-最终输出两个文件到 `output/` 目录：
+最终输出到 `output/` 目录：
 - **CSV 文件**：带 BOM 的 UTF-8，Excel 兼容
 - **HTML 报告**：可直接在浏览器中打开，包含搜索、排序、筛选功能的博主列表页面
+- **.meta.json**：每次采集的元数据（产品、时间、统计），用于索引页
+- **index.html**：采集中心首页，自动汇总所有历史搜索记录，支持按产品名搜索、查看报告、下载 CSV。数据完全保存在本地
 
 ### Phase 5: 建联准备
 
@@ -225,6 +227,7 @@ opencli amazon product <商品链接>
 
 📁 CSV：output/kol-{label}-{timestamp}.csv
 🌐 报告：output/kol-{label}-{timestamp}.html（可直接双击在浏览器中打开）
+🗂️  采集中心：output/index.html（汇总所有历史搜索记录）
 
 📌 Top 10:
   1. @username | A级90分 | 192.4K粉 | 458K播放 | ✉️  email@example.com
