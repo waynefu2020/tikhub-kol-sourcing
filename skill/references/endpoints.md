@@ -114,12 +114,33 @@ videos     → aweme.author.aweme_count
 
 ## 接口选择建议
 
+**推荐优先级（从高到低）**：
+
 | 场景 | 推荐接口 | 原因 |
 |------|---------|------|
-| 大多数情况 | 关键词搜用户 (#1) | 稳定、直接返回用户、字段最全 |
+| **默认（大多数情况）** | 通用搜索 #2 加 `search_type=1` | **视频搜索**：找真实内容创作者，过滤商家号 |
 | 搜特定话题 | 话题视频 (#3) | 需要先获取 hashtag_id |
+| 视频搜索无结果时备选 | 关键词搜用户 (#1) | 直接搜账号名，商家号多但字段更完整 |
 | #1 返回结果少 | App 版用户搜索 (#4) | 数据源不同，可能有更多结果 |
-| 想同时看内容 | 通用搜索 (#2) | 可以看到匹配的视频内容 |
+
+### 为什么视频搜索优于用户搜索？
+
+用户搜索（`fetch_search_user`）按账号名匹配，结果中充斥商家号、机构号——它们恰好把产品词放在账号名里，但并非内容创作者。
+
+视频搜索（`fetch_general_search_result?search_type=1`）按内容匹配，找到的是「在做这类内容」的真实博主，质量更高，与 TikTok 网页搜索结果一致。
+
+**视频搜索的 creator 字段路径**：
+```
+response.data.data[].aweme_info.author.unique_id
+response.data.data[].aweme_info.author.nickname
+response.data.data[].aweme_info.author.follower_count
+response.data.data[].aweme_info.author.signature   // bio（可能为空）
+response.data.data[].aweme_info.statistics.play_count
+response.data.data[].aweme_info.statistics.digg_count
+response.data.data[].aweme_info.desc               // 视频标题
+```
+
+**注意**：视频搜索的 author 对象中 bio（signature）字段有时为空，建议用视频标题（desc）辅助判断博主内容方向。
 
 ---
 

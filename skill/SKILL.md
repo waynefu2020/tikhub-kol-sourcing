@@ -72,6 +72,18 @@ description: >
 - 预期能找到什么类型的博主
 - 建议抓取量
 
+**⚠️ 关键原则：用内容词，不用产品词**
+
+关键词要模拟「真实用户在 TikTok 搜索内容」的行为，不是搜商品名称。
+
+| ❌ 错误（产品词） | ✅ 正确（内容词） | 原因 |
+|----------------|----------------|------|
+| "masticating juicer" | "juicer review" | 产品词吸引商家号，内容词找到真实创作者 |
+| "portable blender B0XXX" | "smoothie recipe" | ASIN/型号词只有卖家用 |
+| "electric cold press juicer" | "morning juice routine" | 场景词找到生活方式博主 |
+
+规律：**品类词 + "review/tutorial/recipe/routine"** 通常比纯品类词质量高得多。
+
 输出格式：
 ```
 📋 产品诊断摘要
@@ -110,7 +122,11 @@ description: >
 接口参考 `references/endpoints.md`。
 
 - **用户已有接口 URL** → 解析路径和参数，确认是否匹配
-- **用户没有接口** → 推荐最适合的接口（通常是 `/api/v1/tiktok/web/fetch_search_user`），告诉用户这个接口能做什么
+- **用户没有接口** → 默认推荐「视频搜索」接口：`/api/v1/tiktok/app/v3/fetch_general_search_result?search_type=1`
+
+**为什么推荐视频搜索而不是用户搜索？**
+
+用户搜索（`fetch_search_user`）按账号名匹配关键词，结果中充斥商家号、机构号、营销号——它们恰好把产品词放在账号名里。视频搜索模拟真实用户在 TikTok 搜索内容的行为，结果是「这个关键词下真正在做内容」的创作者，质量更高。
 
 确认 API key 配置：
 1. 检查 `.env` 文件中是否有 `TIKHUB_API_KEY`
@@ -137,12 +153,16 @@ description: >
 4. 执行完成后删除 `_scrape.ts`
 
 脚本会自动：
-- 逐关键词分页抓取
-- 每页间隔 1 秒（避免触发限流）
-- 按 unique_id 全局去重
+- 用视频搜索接口（`fetch_general_search_result?search_type=1`）搜索视频
+- 从每个视频的 author 字段提取创作者（不是直接搜账号）
+- 过滤粉丝数 < 5000 的账号（商家号/新号通常粉丝极少）
+- 按 unique_id 全局去重，同一博主保留播放量最高的视频记录
 - 从 bio 提取邮箱
-- 计算建联优先级评分
-- 输出带 BOM 的 UTF-8 CSV（Excel 兼容）
+- 计算建联优先级评分，加入视频播放量加分项
+- 输出带 BOM 的 UTF-8 CSV（Excel 兼容），包含 best_video_plays 列
+- 每页间隔 1 秒（避免触发限流）
+
+**注意**：视频搜索返回的 author 对象 bio 字段可能较简略（很多创作者把联系方式放在主页链接而非 bio）。有邮箱率通常低于用户搜索接口，但博主内容质量显著更高。
 
 ### Phase 5: 建联准备
 
