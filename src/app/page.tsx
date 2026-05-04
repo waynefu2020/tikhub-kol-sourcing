@@ -131,10 +131,31 @@ export default function HomePage() {
   const terminalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTerminalStep((prev) => (prev < terminalLines.length ? prev + 1 : 0));
-    }, 200);
-    return () => clearInterval(interval);
+    let timeout: NodeJS.Timeout;
+    let interval: NodeJS.Timeout;
+
+    const startAnimation = () => {
+      interval = setInterval(() => {
+        setTerminalStep((prev) => {
+          if (prev >= terminalLines.length) {
+            clearInterval(interval);
+            timeout = setTimeout(() => {
+              setTerminalStep(0);
+              startAnimation();
+            }, 3000);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 200);
+    };
+
+    startAnimation();
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, []);
 
   useEffect(() => {
