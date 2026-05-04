@@ -70,12 +70,12 @@ const features = [
 ];
 
 const sampleRows = [
-  { score: 85, tier: "A", username: "@stationerywithsarah", followers: "128.4K", email: "sarah@mgmt.io", keyword: "notebook review", match: "Y" },
-  { score: 80, tier: "A", username: "@studywithelle", followers: "47.2K", email: "elle@creator.studio", keyword: "study with me", match: "N" },
-  { score: 75, tier: "A", username: "@plannergirlmaya", followers: "312.8K", email: "maya@plannerlife.com", keyword: "rocketbook review", match: "Y" },
-  { score: 55, tier: "B", username: "@desksetupjake", followers: "89.6K", email: null, keyword: "desk setup", match: "N" },
-  { score: 50, tier: "B", username: "@collegeessentials_", followers: "23.1K", email: null, keyword: "college essentials", match: "N" },
-  { score: 30, tier: "C", username: "@backtoschoolvibes", followers: "8.9K", email: null, keyword: "back to school", match: "N" },
+  { score: 85, tier: "A", username: "@smoothieswithsam", followers: "89.3K", email: "sam@creator.studio", keyword: "portable blender review", match: "Y" },
+  { score: 80, tier: "A", username: "@healthyjen_official", followers: "156.7K", email: "jen@influencemgmt.com", keyword: "smoothie recipe", match: "Y" },
+  { score: 75, tier: "A", username: "@blendjetvsthis", followers: "43.2K", email: "collab@blendvsthis.com", keyword: "blendjet alternative", match: "N" },
+  { score: 55, tier: "B", username: "@mealprepsunday_", followers: "67.4K", email: null, keyword: "meal prep", match: "N" },
+  { score: 50, tier: "B", username: "@fitnessjourneyalex", followers: "28.9K", email: null, keyword: "healthy breakfast", match: "Y" },
+  { score: 30, tier: "C", username: "@gymvlogs_official", followers: "12.1K", email: null, keyword: "gym snacks", match: "N" },
 ];
 
 const tierColor: Record<string, string> = {
@@ -179,13 +179,13 @@ export default function HomePage() {
                 </div>
                 <div className="flex gap-2 mt-2">
                   <span className="text-[#FE2C55]">▶</span>
-                  <span className="text-white/50">ideaShell 智能笔记本，主打美国市场...</span>
+                  <span className="text-white/50">JuiceGo 便携榨汁机，主打美国市场...</span>
                 </div>
                 <div className="pl-4 text-white/40 text-xs space-y-1">
-                  <p><span className="text-emerald-400">✓</span> 推荐关键词：notebook review · study with me · rocketbook review · college essentials</p>
+                  <p><span className="text-emerald-400">✓</span> 推荐关键词：portable blender review · smoothie recipe · blendjet alternative · meal prep</p>
                   <p><span className="text-emerald-400">✓</span> 开始抓取，共 4 组关键词...</p>
-                  <p><span className="text-emerald-400">✓</span> 采集完成：112 位博主，A 级 23 位，有邮箱 31 位</p>
-                  <p><span className="text-emerald-400">✓</span> <span className="text-white/60">output/kol-stationery-20260503-143022.csv</span></p>
+                  <p><span className="text-emerald-400">✓</span> 采集完成：98 位博主，A 级 19 位，有邮箱 27 位</p>
+                  <p><span className="text-emerald-400">✓</span> <span className="text-white/60">output/kol-blender-20260504-091532.csv</span></p>
                 </div>
                 <div className="flex items-center gap-1 mt-1">
                   <span className="text-[#FE2C55]">▶</span>
@@ -254,7 +254,7 @@ export default function HomePage() {
           <div className="rounded-2xl border border-white/8 bg-[#0f0f0f] overflow-hidden">
             <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#FE2C55]" />
-              <span className="text-xs font-mono text-white/30">kol-stationery-20260503-143022.csv</span>
+              <span className="text-xs font-mono text-white/30">kol-blender-20260504-091532.csv</span>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-xs font-mono">
