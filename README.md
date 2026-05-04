@@ -1,8 +1,10 @@
 # 红人建联助手 · tikhub-kol-sourcing
 
-> AI Agent Skill — 帮 KOL 运营从零开始获取 TikTok 红人建联名单
+> AI Agent Skill — TikTok 红人建联自动化 Skill
 
-**兼容**: Claude Code · OpenClaw · Codex · OpenCode 及其他支持 Skill 的 AI Agent
+**官网**: [tikhub-kol-sourcing.netlify.app](https://tikhub-kol-sourcing.netlify.app)
+
+**兼容**: Claude Code · 龙虾 · Codex · OpenCode 及其他支持 Skill 的 AI Agent
 
 ---
 
