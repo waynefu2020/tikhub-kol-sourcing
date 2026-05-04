@@ -191,6 +191,7 @@ export default function HomePage() {
           <a href="#scoring" className="hover:text-white transition-colors">评分模型</a>
           <a href="#quickstart" className="hover:text-white transition-colors">接入指南</a>
           <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
+          <a href="https://www.xiaohongshu.com/user/profile/6391a19d000000001f0180f2" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">作者小红书</a>
         </div>
         <a
           href={githubUrl}
