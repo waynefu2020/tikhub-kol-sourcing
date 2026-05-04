@@ -2,7 +2,7 @@
 
 > AI Agent Skill — TikTok 红人建联自动化 Skill
 
-**官网**: [tikhub-kol-sourcing.netlify.app](https://tikhub-kol-sourcing.netlify.app)
+**官网**: [tikhub-kol-sourcing.vercel.app](https://tikhub-kol-sourcing.vercel.app)
 
 **兼容**: Claude Code · 龙虾 · Codex · OpenCode 及其他支持 Skill 的 AI Agent
 

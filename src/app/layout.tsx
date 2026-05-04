@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "红人建联助手 — TikTok 红人建联自动化 Skill",
   description:
     "一句话找到精准合作红人。产品诊断 → 关键词策略 → 自动采集 → 建联评分 → CSV 导出，全流程 AI 自动化。兼容 Claude Code、龙虾、Codex、OpenCode 等 AI Agent。",
-  metadataBase: new URL("https://tikhub-kol-sourcing.netlify.app"),
+  metadataBase: new URL("https://tikhub-kol-sourcing.vercel.app"),
   openGraph: {
     title: "红人建联助手 — TikTok 红人建联自动化 Skill",
     description: "一句话找到精准合作红人，全流程 AI 自动化。",
